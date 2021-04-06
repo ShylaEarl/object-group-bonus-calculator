@@ -40,4 +40,17 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
-console.log( employees );
+
+
+console.log(employees);
+
+// function listAll(array){
+//   let person = {};
+//   for(let i = 0; i < array.length; i++){
+//     person = array[i];
+//   }
+//   return person;
+// }
+
+//console.log( listAll(employees) );
+
