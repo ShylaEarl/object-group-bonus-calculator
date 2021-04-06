@@ -40,7 +40,18 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
+function personBonus (object) {
+  let newObject = {
+    name: name,
+    bonusPercentage: bonusPercentage,
 
+  }
+}
+
+console.log(personBonus({name: 'Atticus',
+employeeNumber: '2405',
+annualSalary: '47000',
+reviewRating: 3}));
 
 console.log(employees);
 
