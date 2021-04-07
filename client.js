@@ -40,6 +40,68 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
+console.log(employees);
+
+let empBonusObj = [];
+let item;
+
+// for (let person of employees){
+//   console.log('in for of loop: ', person);
+//   item = person;
+//   //item = calculateBonus(person);
+// }
+
+for (let i = 0; i < employees.length; i++){
+  console.log(employees[i]);
+  item = employees[i];
+  //item = calculateBonus(employees[i]);
+}
+
+//employees[i].reviewRating
+function calculateBonus(item){
+ 
+   if(item.reviewRating === 3){
+     return item.annualSalary * .04;
+   } else if (item.reviewRating === 4){
+     return item.annualSalary * .06;
+   } else if (item.annualSalary === 5){
+     return item.annualSalary * .1;
+   } else {
+     return item.annualSalary;
+   }
+   empBonusObj.push(item);
+}//end calculateBonus function
+
+console.log('testing function', calculateBonus(employees));
+console.log('in bonus array', empBonusObj);
+
+for (let i = 0; i < employees.length; i++){
+  console.log(employees[i]);
+  //let item = employees[i];
+  let item = calculateBonus(employees[i]);
+}
+
+//   for (let i = 0; i < employees.length; i++){
+//     console.log(employees[i]);
+//     let result = employeeBonus(employees[i]);
+//   }
+  
+// console.log('In employeeBonus:');
+//   function employeeBonus(array) {
+//     return console.log(array);
+//   }
+// console.log(employeeBonus(employees[1]));
+/////////////////////////////////////////////
+// function listAll(array){
+//   let person = {};
+//   for(let i = 0; i < array.length; i++){
+//     person = array[i];
+//   }
+//   return person;
+// }
+
+// console.log( listAll(employees) );
+
 // function personBonus (object) {
 //   let newObject = {
 //     name: name,
@@ -52,25 +114,4 @@ const employees = [
 // employeeNumber: '2405',
 // annualSalary: '47000',
 // reviewRating: 3}));
-
-// console.log(employees);
-
-// function listAll(array){
-//   let person = {};
-//   for(let i = 0; i < array.length; i++){
-//     person = array[i];
-//   }
-//   return person;
-// }
-  for (let i = 0; i < employees.length; i++){
-    console.log(employees[i]);
-    let result = employeeBonus(employees[i]);
-  }
-  
-console.log('In employeeBonus:');
-  function employeeBonus(array) {
-    return console.log(array);
-  }
-console.log(employeeBonus(employees[1]));
-// console.log( listAll(employees) );
 
