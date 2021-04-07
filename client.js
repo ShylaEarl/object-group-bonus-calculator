@@ -40,20 +40,20 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
-function personBonus (object) {
-  let newObject = {
-    name: name,
-    bonusPercentage: bonusPercentage,
+// function personBonus (object) {
+//   let newObject = {
+//     name: name,
+//     bonusPercentage: bonusPercentage,
 
-  }
-}
+//   }
+// }
 
-console.log(personBonus({name: 'Atticus',
-employeeNumber: '2405',
-annualSalary: '47000',
-reviewRating: 3}));
+// console.log(personBonus({name: 'Atticus',
+// employeeNumber: '2405',
+// annualSalary: '47000',
+// reviewRating: 3}));
 
-console.log(employees);
+// console.log(employees);
 
 // function listAll(array){
 //   let person = {};
@@ -62,6 +62,15 @@ console.log(employees);
 //   }
 //   return person;
 // }
-
-//console.log( listAll(employees) );
+  for (let i = 0; i < employees.length; i++){
+    console.log(employees[i]);
+    let result = employeeBonus(employees[i]);
+  }
+  
+console.log('In employeeBonus:');
+  function employeeBonus(array) {
+    return console.log(array);
+  }
+console.log(employeeBonus(employees[1]));
+// console.log( listAll(employees) );
 
