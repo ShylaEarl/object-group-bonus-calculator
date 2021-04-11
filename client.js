@@ -40,78 +40,194 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
-console.log(employees);
+console.log( employees );
 
-let empBonusObj = [];
-let item;
+function calculateBonus( employee ) {
 
-// for (let person of employees){
-//   console.log('in for of loop: ', person);
-//   item = person;
-//   //item = calculateBonus(person);
-// }
-
-for (let i = 0; i < employees.length; i++){
-  console.log(employees[i]);
-  item = employees[i];
-  //item = calculateBonus(employees[i]);
-}
-
-//employees[i].reviewRating
-function calculateBonus(item){
- 
-   if(item.reviewRating === 3){
-     return item.annualSalary * .04;
-   } else if (item.reviewRating === 4){
-     return item.annualSalary * .06;
-   } else if (item.annualSalary === 5){
-     return item.annualSalary * .1;
-   } else {
-     return item.annualSalary;
-   }
-   empBonusObj.push(item);
-}//end calculateBonus function
-
-console.log('testing function', calculateBonus(employees));
-console.log('in bonus array', empBonusObj);
-
-for (let i = 0; i < employees.length; i++){
-  console.log(employees[i]);
-  //let item = employees[i];
-  let item = calculateBonus(employees[i]);
-}
-
-//   for (let i = 0; i < employees.length; i++){
-//     console.log(employees[i]);
-//     let result = employeeBonus(employees[i]);
-//   }
+  let bonusPercentage = calculateBonusPercent(employee);
+  let bonusAmount = bonusPercentage/100 * Number(employee.annualSalary)
   
-// console.log('In employeeBonus:');
-//   function employeeBonus(array) {
-//     return console.log(array);
-//   }
-// console.log(employeeBonus(employees[1]));
-/////////////////////////////////////////////
-// function listAll(array){
-//   let person = {};
-//   for(let i = 0; i < array.length; i++){
-//     person = array[i];
-//   }
-//   return person;
-// }
+  let employeeBonus = {
+    name: employee.name,
+    bonusPercentage: bonusPercentage,
+    totalCompensation: Number(employee.annualSalary) + bonusAmount,
+    totalBonus: bonusAmount
+  }
+  return employeeBonus;
+}
 
-// console.log( listAll(employees) );
+for ( let person of employees ) {
+  console.log( calculateBonus(person) );
+}
 
-// function personBonus (object) {
-//   let newObject = {
-//     name: name,
-//     bonusPercentage: bonusPercentage,
+function calculateBonusPercent( employee ) {
 
-//   }
-// }
+  let bonusPercent = 0;
 
-// console.log(personBonus({name: 'Atticus',
-// employeeNumber: '2405',
-// annualSalary: '47000',
-// reviewRating: 3}));
+  if ( employee.reviewRating === 3 ) {
+    // - If rating of a 3 should receive a base bonus of 4% 
+    bonusPercent += 4;
+  } 
+  else if ( employee.reviewRating === 4 ) {
+    // - If rating of a 4 should receive a base bonus of 6% 
+    bonusPercent += 6;
+  } else if ( employee.reviewRating === 5 ) {
+    // - If rating of a 5 should receive a base bonus of 10% of their base annual income.
+    bonusPercent += 10;
+  } 
+
+  // If employee number is 4 digits long, they have 15+ years with company & get an extra 5%
+  if ( employee.employeeNumber.length === 4 && employee.reviewRating > 2 ) {
+    bonusPercent += 5;
+  }
+
+  // - However, if their annual income is greater than $65,000, they should have their bonus adjusted down 1%.
+  if ( employee.annualSalary > 65000 ){
+    bonusPercent -= 1;
+  }
+  
+  // - No bonus can be above 13% or below 0% total.
+  if ( bonusPercent > 13 ) {
+    bonusPercent = 13;
+  } else if ( bonusPercent < 0 ) {
+    bonusPercent = 0;
+  }
+
+  return bonusPercent;
+}
+
+console.log('Testing reviewRating 2, expect 0:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '50000',
+    reviewRating: 2
+  }
+));
+
+console.log('Testing reviewRating 2 & long term employee, still expect 0:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '9999',
+    annualSalary: '50000',
+    reviewRating: 2
+  }
+));
+
+console.log('Testing reviewRating 2 & over 65k, still expect 0:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '150000',
+    reviewRating: 2
+  }
+));
+
+console.log('Testing reviewRating 1, expect 0:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '50000',
+    reviewRating: 1
+  }
+));
+
+console.log('Testing reviewRating 3, expect 4:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '50000',
+    reviewRating: 3
+  }
+));
+
+console.log('Testing reviewRating 4, expect 6:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '50000',
+    reviewRating: 4
+  }
+));
+
+console.log('Testing reviewRating 5, expect 10:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '50000',
+    reviewRating: 5
+  }
+));
+
+console.log('Testing reviewRating 5 & long term employee, expect 13:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '9999',
+    annualSalary: '50000',
+    reviewRating: 5
+  }
+));
+
+console.log('Testing reviewRating 4 & long term employee, expect 11:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '9999',
+    annualSalary: '50000',
+    reviewRating: 4
+  }
+));
+
+console.log('Testing reviewRating 3 & long term employee, expect 9:', 
+    calculateBonusPercent(
+      {
+        name: 'Blah',
+        employeeNumber: '9999',
+        annualSalary: '50000',
+        reviewRating: 3
+      }
+    )
+);
+
+console.log('Testing reviewRating 3 & long term employee & over 65k, expect 8:', 
+    calculateBonusPercent(
+      {
+        name: 'Blah',
+        employeeNumber: '9999',
+        annualSalary: '150000',
+        reviewRating: 3
+      }
+    )
+);
+
+console.log('Testing reviewRating 5 & long term employee & over 65k, expect 13:', 
+    calculateBonusPercent(
+      {
+        name: 'Blah',
+        employeeNumber: '9999',
+        annualSalary: '150000',
+        reviewRating: 5
+      }
+    )
+);
+
+console.log('Testing reviewRating 5, expect 9:', calculateBonusPercent(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '150000',
+    reviewRating: 5
+  }
+));
+
+// Testing calculateBonus 
+
+console.log('Testing bonus of 0, expect name=Blah, bonusPercentage=0, totalCompensation=50k,' +
+  'totalBonus=0', calculateBonus(
+  {
+    name: 'Blah',
+    employeeNumber: '999',
+    annualSalary: '50000',
+    reviewRating: 1
+  }
+));
 
